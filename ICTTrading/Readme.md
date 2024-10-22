@@ -15,3 +15,7 @@
 ![image](https://github.com/user-attachments/assets/7f18bccc-6e6c-4b8f-9457-2a04897541c1)
 
 https://x.com/SoulzBTC/status/1847955746903753174
+
+![image](https://github.com/user-attachments/assets/dde2df59-cf01-48e5-8c22-287578cae13e)
+
+https://www.youtube.com/watch?v=ftAuQSy8S_g
