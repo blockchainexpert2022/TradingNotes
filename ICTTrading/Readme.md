@@ -27,3 +27,7 @@ https://www.youtube.com/watch?v=DO-fBNFZgoI
 ![image](https://github.com/user-attachments/assets/62b27b58-2f98-4f92-b65b-61482ed1af6f)
 
 https://x.com/Liq_Sniper/status/1849468140612202611/photo/1
+
+![image](https://github.com/user-attachments/assets/5eeece61-468f-40e5-8344-4f7114aad397)
+
+https://www.youtube.com/watch?v=OFok_yoFm9M
