@@ -38,4 +38,7 @@ https://tradegpt2025.blogspot.com
 
 https://www.youtube.com/watch?v=9awzcEXFk5I
 
+![image](https://github.com/user-attachments/assets/b203337b-6556-49b1-b90f-5da23cc15c2a)
+
+
 
