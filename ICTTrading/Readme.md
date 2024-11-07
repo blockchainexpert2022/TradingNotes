@@ -40,5 +40,9 @@ https://www.youtube.com/watch?v=9awzcEXFk5I
 
 ![image](https://github.com/user-attachments/assets/b203337b-6556-49b1-b90f-5da23cc15c2a)
 
+![image](https://github.com/user-attachments/assets/9089ffd1-ef0e-457e-9afd-682cf7c06c76)
+
+https://x.com/fx4_living/status/1854233354339574251/photo/1
+
 
 
