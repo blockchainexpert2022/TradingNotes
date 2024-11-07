@@ -44,5 +44,7 @@ https://www.youtube.com/watch?v=9awzcEXFk5I
 
 https://x.com/fx4_living/status/1854233354339574251/photo/1
 
+![image](https://github.com/user-attachments/assets/af30202a-2d50-4f69-a5ce-5bb0a03edbc3)
 
+https://www.youtube.com/watch?v=7zy1c5OqOSY
 
