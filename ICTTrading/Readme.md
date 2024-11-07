@@ -48,3 +48,6 @@ https://x.com/fx4_living/status/1854233354339574251/photo/1
 
 https://www.youtube.com/watch?v=7zy1c5OqOSY
 
+![image](https://github.com/user-attachments/assets/6eeeb066-8d8b-4f8f-a59b-1b74864402a2)
+
+
