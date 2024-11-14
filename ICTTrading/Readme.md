@@ -50,4 +50,13 @@ https://www.youtube.com/watch?v=7zy1c5OqOSY
 
 ![image](https://github.com/user-attachments/assets/6eeeb066-8d8b-4f8f-a59b-1b74864402a2)
 
+![image](https://github.com/user-attachments/assets/00ebcd84-e50a-462e-ab3c-de938d007792)
+
+![image](https://github.com/user-attachments/assets/279a6ed8-2a15-4dbb-9f9c-de5093caae5d)
+
+![image](https://github.com/user-attachments/assets/efe7d559-6d9c-4aff-a1f5-7402993214f6)
+
+![image](https://github.com/user-attachments/assets/6173e6bc-afbc-4b85-9931-c019a5bdb27c)
+
+https://x.com/KMTrading_SMC/status/1857030775880712582
 
