@@ -1,0 +1,39 @@
+//@version=5
+indicator("Lines on High and Low of 9h00-9h15 Candle (Local Time)", overlay=true)
+
+// Définir l'heure et la minute de début et de fin de la bougie de 9h00-9h15 dans le fuseau horaire local
+targetStartHour = 9
+targetStartMinute = 00
+targetEndHour = 9
+targetEndMinute = 15
+
+// Convertir l'heure UTC en heure locale (par exemple, +1 pour UTC+1)
+localHour = hour + 1
+localMinute = minute
+
+// Vérifier si la bougie actuelle correspond à la période de 9h00-9h15 dans le fuseau horaire local
+isTargetCandle = (localHour == targetStartHour and localMinute >= targetStartMinute and localMinute < targetEndMinute)
+
+// Initialiser les variables pour stocker les valeurs de haut et bas de la bougie cible
+var float targetHigh = na
+var float targetLow = na
+
+// Si la bougie actuelle est dans la période cible, mettre à jour les valeurs de haut et bas
+if (isTargetCandle)
+    if (na(targetHigh) or high > targetHigh)
+        targetHigh := high
+    if (na(targetLow) or low < targetLow)
+        targetLow := low
+
+// Si la bougie actuelle dépasse la période cible, dessiner les lignes et réinitialiser les variables
+if (localHour > targetEndHour or (localHour == targetEndHour and localMinute >= targetEndMinute))
+    if (not na(targetHigh) and not na(targetLow))
+        // Ligne sur le plus haut
+        line.new(x1=bar_index-1, y1=targetHigh, x2=bar_index + 75, y2=targetHigh, color=color.red, width=1)
+        
+        // Ligne sur le plus bas
+        line.new(x1=bar_index-1, y1=targetLow, x2=bar_index + 75, y2=targetLow, color=color.green, width=1)
+        
+        // Réinitialiser les variables
+        targetHigh := na
+        targetLow := na
