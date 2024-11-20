@@ -9,7 +9,7 @@
 #include <Trade/Trade.mqh>
 
 //--- Variables globales
-input ENUM_TIMEFRAMES TimeFrame = PERIOD_H1; // Timeframe pour l'analyse
+//input ENUM_TIMEFRAMES TimeFrame = PERIOD_H1; // Timeframe pour l'analyse
 
 //+------------------------------------------------------------------+
 //| Expert initialization function                                   |
