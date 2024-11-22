@@ -60,3 +60,7 @@ https://www.youtube.com/watch?v=7zy1c5OqOSY
 
 https://x.com/KMTrading_SMC/status/1857030775880712582
 
+![image](https://github.com/user-attachments/assets/ae640666-9e17-41e7-814d-b4f89782e618)
+
+https://x.com/bullprooftrader/status/1859341339621720506/photo/1
+
