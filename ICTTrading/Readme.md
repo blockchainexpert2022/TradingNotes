@@ -64,3 +64,6 @@ https://x.com/KMTrading_SMC/status/1857030775880712582
 
 https://x.com/bullprooftrader/status/1859341339621720506/photo/1
 
+![image](https://github.com/user-attachments/assets/73c9635e-e84d-47d7-8517-9f3a619afac2)
+
+https://x.com/daytradingrauf/status/1862880827417178459/photo/1
