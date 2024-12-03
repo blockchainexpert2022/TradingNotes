@@ -67,3 +67,23 @@ https://x.com/bullprooftrader/status/1859341339621720506/photo/1
 ![image](https://github.com/user-attachments/assets/73c9635e-e84d-47d7-8517-9f3a619afac2)
 
 https://x.com/daytradingrauf/status/1862880827417178459/photo/1
+
+[image](https://github.com/user-attachments/assets/78eca6a8-c571-4a9c-95fe-2cd23f285542)
+
+![image](https://github.com/user-attachments/assets/8661df91-81e2-45f9-bc6c-ffd33528aa9d)
+
+![image](https://github.com/user-attachments/assets/db1c67f2-2d97-4990-ad3c-abfa4e8a9a97)
+
+![image](https://github.com/user-attachments/assets/9f4a1d35-f4fc-49b4-ba89-96ec5dbe344d)
+
+![image](https://github.com/user-attachments/assets/57408029-6cbc-4e22-a1b4-db14949c0a6f)
+
+![image](https://github.com/user-attachments/assets/98becc03-ce62-4930-86e4-b801a870988f)
+
+![image](https://github.com/user-attachments/assets/b4230498-26ce-4bd1-84e5-7d3fec7c47ea)
+
+![image](https://github.com/user-attachments/assets/33302420-45ec-4dbe-a62b-17af5b1775e3)
+
+![image](https://github.com/user-attachments/assets/61fe22ce-21b2-4a6a-9084-18102d1e3b81)
+
+https://x.com/TraderDiegoX/status/1863922776412733685
