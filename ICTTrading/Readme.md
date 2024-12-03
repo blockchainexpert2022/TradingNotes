@@ -72,18 +72,18 @@ https://x.com/daytradingrauf/status/1862880827417178459/photo/1
 
 ![image](https://github.com/user-attachments/assets/8661df91-81e2-45f9-bc6c-ffd33528aa9d)
 
-![image](https://github.com/user-attachments/assets/db1c67f2-2d97-4990-ad3c-abfa4e8a9a97)
+![image](https://github.com/user-attachments/assets/8666c337-204d-4df1-98e2-066ba60f1e45)
 
-![image](https://github.com/user-attachments/assets/9f4a1d35-f4fc-49b4-ba89-96ec5dbe344d)
+![image](https://github.com/user-attachments/assets/71b4ec7a-ee2d-477e-af11-a9b0f33d6879)
 
-![image](https://github.com/user-attachments/assets/57408029-6cbc-4e22-a1b4-db14949c0a6f)
+![image](https://github.com/user-attachments/assets/0c044dde-1a72-4740-815d-5f9eeda171e2)
 
-![image](https://github.com/user-attachments/assets/98becc03-ce62-4930-86e4-b801a870988f)
+![image](https://github.com/user-attachments/assets/3120660c-6464-476e-ba15-2308114e0218)
 
-![image](https://github.com/user-attachments/assets/b4230498-26ce-4bd1-84e5-7d3fec7c47ea)
+![image](https://github.com/user-attachments/assets/b6d6d4ef-b377-4e27-8275-ccb3f51fd51f)
 
-![image](https://github.com/user-attachments/assets/33302420-45ec-4dbe-a62b-17af5b1775e3)
+![image](https://github.com/user-attachments/assets/e854fa3e-b50b-42e5-8f8e-5f4267dd39c5)
 
-![image](https://github.com/user-attachments/assets/61fe22ce-21b2-4a6a-9084-18102d1e3b81)
+![image](https://github.com/user-attachments/assets/5f4aafa0-e2d6-4fb6-82e7-8f716c7e01a1)
 
 https://x.com/TraderDiegoX/status/1863922776412733685
