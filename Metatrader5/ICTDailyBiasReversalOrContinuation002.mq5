@@ -16,11 +16,6 @@ input bool enableTrading = true; // Option pour activer ou désactiver le tradin
 
 CTrade trade;
 MqlRates mql_rates[]; // Tableau pour stocker les données de marché
-double tenkan_sen_buffer[];
-double kijun_sen_buffer[];
-double senkou_span_a_buffer[];
-double senkou_span_b_buffer[];
-double chikou_span_buffer[];
 
 //+------------------------------------------------------------------+
 //| Fonction principale exécutée par le script                      |
@@ -31,11 +26,6 @@ void OnStart()
 
     // Configure les tableaux comme séries
     ArraySetAsSeries(mql_rates, true);
-    ArraySetAsSeries(tenkan_sen_buffer, true);
-    ArraySetAsSeries(kijun_sen_buffer, true);
-    ArraySetAsSeries(senkou_span_a_buffer, true);
-    ArraySetAsSeries(senkou_span_b_buffer, true);
-    ArraySetAsSeries(chikou_span_buffer, true);
 
     bool onlySymbolsInMarketwatch = true;
     int stotal = SymbolsTotal(onlySymbolsInMarketwatch); // Seulement les symboles du MarketWatch
