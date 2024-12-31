@@ -91,3 +91,7 @@ https://x.com/TraderDiegoX/status/1863922776412733685
 ![image](https://github.com/user-attachments/assets/2b87d29f-236d-4644-8116-1c9c228d192d)
 
 https://x.com/rahmath369/status/1873423732917911900/photo/1
+
+https://www.youtube.com/watch?v=g3oDYq4P9ZE
+
+
