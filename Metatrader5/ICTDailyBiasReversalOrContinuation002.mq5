@@ -4,7 +4,7 @@
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
 
-#property copyright "Copyright 2023, Invest Data Systems France."
+#property copyright "Copyright 2025, Invest Data Systems France."
 #property link      "https://www.mql5.com"
 #property version   "1.01"
 
