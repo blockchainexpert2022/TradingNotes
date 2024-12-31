@@ -87,3 +87,7 @@ https://x.com/daytradingrauf/status/1862880827417178459/photo/1
 ![image](https://github.com/user-attachments/assets/5f4aafa0-e2d6-4fb6-82e7-8f716c7e01a1)
 
 https://x.com/TraderDiegoX/status/1863922776412733685
+
+![image](https://github.com/user-attachments/assets/2b87d29f-236d-4644-8116-1c9c228d192d)
+
+https://x.com/rahmath369/status/1873423732917911900/photo/1
