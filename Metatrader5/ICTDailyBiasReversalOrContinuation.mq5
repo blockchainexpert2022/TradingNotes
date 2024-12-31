@@ -1,6 +1,6 @@
 //+------------------------------------------------------------------+
 //|                ICTDailyBiasICTDailyBiasReversalOrContinuation.mq5|
-//|                          Copyright 2024, Invest Data Systems FR. |
+//|                          Copyright 2025, Invest Data Systems FR. |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
 
