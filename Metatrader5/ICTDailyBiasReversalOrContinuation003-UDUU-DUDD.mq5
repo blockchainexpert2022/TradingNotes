@@ -120,7 +120,7 @@ void Ichimoku(string sname)
          //printf(">>> Target has already been reached");
          bTargetReached = true;
         }
-        printf("ICT DB REVERSAL (D->U) detected for " + sname + " at " + mql_rates[0].close + " target = " + mql_rates[1].low + " " + (bTargetReached?">>> Target has already been reached":""));
+        printf("ICT DB REVERSAL (D->U) detected for " + sname + " at " + mql_rates[0].close + " target = " + mql_rates[1].high + " " + (bTargetReached?">>> Target has already been reached":""));
     }
 
     // Condition pour valider une continuation tendance baissière
@@ -136,7 +136,7 @@ void Ichimoku(string sname)
         bTargetReached = true;
          //printf(">>> Target has already been reached");
         }        
-        printf("ICT DB CONTINUATION (D->D) detected for " + sname + " at " + mql_rates[0].close + " target = " + mql_rates[1].high + " " + (bTargetReached?">>> Target has already been reached":""));
+        printf("ICT DB CONTINUATION (D->D) detected for " + sname + " at " + mql_rates[0].close + " target = " + mql_rates[1].low + " " + (bTargetReached?">>> Target has already been reached":""));
     }
 
 
