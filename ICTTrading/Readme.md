@@ -94,4 +94,10 @@ https://x.com/rahmath369/status/1873423732917911900/photo/1
 
 https://www.youtube.com/watch?v=g3oDYq4P9ZE
 
+![image](https://github.com/user-attachments/assets/7decee23-e75e-4ea8-aed8-f1c46c04cc3d)
+
+https://www.youtube.com/watch?v=g3oDYq4P9ZE
+
+
+
 
