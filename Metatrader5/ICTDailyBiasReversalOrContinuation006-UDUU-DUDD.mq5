@@ -4,7 +4,9 @@
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
 
-// This is the version to use because previous ones were bugged
+// This is the version to use because previous ones were bugged.
+// Add the assets to be scanned to the Market Watch window of Metatrader 5.
+// Run the script when a new daily candlestick is starting.
 
 #property copyright "Copyright 2025, Invest Data Systems France."
 #property link      "https://www.mql5.com"
