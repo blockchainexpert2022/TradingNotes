@@ -4,6 +4,8 @@
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
 
+// This is the version to use because previous ones were bugged
+
 #property copyright "Copyright 2025, Invest Data Systems France."
 #property link      "https://www.mql5.com"
 #property version   "1.01"
