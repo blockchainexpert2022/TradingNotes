@@ -4,7 +4,7 @@
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
 
-// This version logs the date and time of the current price in the logged data
+// Logs date time and improvement on formatting output
 
 #property copyright "Copyright 2025, Invest Data Systems France."
 #property link      "https://www.mql5.com"
@@ -93,8 +93,8 @@ void Ichimoku(string sname)
          //printf(">>> Target has already been reached");
          bTargetReached = true;
         }
-        if (showReachedTargets && bTargetReached) printf("ICT DB REVERSAL (U->D) detected for " + sname + " (" + strdt + ") at " + mql_rates[0].close + " target = " + mql_rates[1].low + " " + (bTargetReached?">>> Target has already been reached":""));
-        else if (!bTargetReached) printf("ICT DB REVERSAL (U->D) detected for " + sname + " (" + strdt + ") at " + mql_rates[0].close + " target = " + mql_rates[1].low + " " + (bTargetReached?">>> Target has already been reached":""));        
+        if (showReachedTargets && bTargetReached) printf("ICT DB REVERSAL     (U->D) detected for " + sname + " (" + strdt + ") at " + mql_rates[0].close + " target = " + mql_rates[1].low + " " + (bTargetReached?">>> Target has already been reached":""));
+        else if (!bTargetReached) printf("ICT DB REVERSAL     (U->D) detected for " + sname + " (" + strdt + ") at " + mql_rates[0].close + " target = " + mql_rates[1].low + " " + (bTargetReached?">>> Target has already been reached":""));        
     }
 
     // Condition pour valider une continuation tendance haussière
@@ -129,8 +129,8 @@ void Ichimoku(string sname)
          //printf(">>> Target has already been reached");
          bTargetReached = true;
         }
-        if (showReachedTargets && bTargetReached) printf("ICT DB REVERSAL (D->U) detected for " + sname + " (" + strdt + ") at " + mql_rates[0].close + " target = " + mql_rates[1].high + " " + (bTargetReached?">>> Target has already been reached":""));
-        else if (!bTargetReached) printf("ICT DB REVERSAL (D->U) detected for " + sname + " (" + strdt + ") at " + mql_rates[0].close + " target = " + mql_rates[1].high + " " + (bTargetReached?">>> Target has already been reached":""));
+        if (showReachedTargets && bTargetReached) printf("ICT DB REVERSAL     (D->U) detected for " + sname + " (" + strdt + ") at " + mql_rates[0].close + " target = " + mql_rates[1].high + " " + (bTargetReached?">>> Target has already been reached":""));
+        else if (!bTargetReached) printf("ICT DB REVERSAL     (D->U) detected for " + sname + " (" + strdt + ") at " + mql_rates[0].close + " target = " + mql_rates[1].high + " " + (bTargetReached?">>> Target has already been reached":""));
     }
 
     // Condition pour valider une continuation tendance baissière
