@@ -98,6 +98,12 @@ https://www.youtube.com/watch?v=g3oDYq4P9ZE
 
 https://www.youtube.com/watch?v=g3oDYq4P9ZE
 
+![image](https://github.com/user-attachments/assets/793704ff-418c-4a77-88eb-4370d7036430)
 
+https://x.com/bullprooftrader/status/1875179119895363675/photo/1
+
+![image](https://github.com/user-attachments/assets/0beddf9b-b995-4938-aa9c-1d74a593ac0f)
+
+https://x.com/TraderFlameseN/status/1875159984314658867/photo/1
 
 
