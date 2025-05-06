@@ -1,3 +1,5 @@
+# This version takes one screenshot + sends it to gemini then takes the next one and so on...
+
 import requests
 import time
 import os
