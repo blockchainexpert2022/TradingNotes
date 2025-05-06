@@ -1,3 +1,14 @@
+# Install required packages
+!pip install selenium pillow requests google-generativeai
+
+# Install system dependencies for ChromeDriver
+!apt-get update
+!apt-get install -y chromium-chromedriver
+
+# Set up environment variables
+import os
+os.environ["PATH"] += os.pathsep + "/usr/lib/chromium-browser/"
+
 import requests
 import time
 import os
