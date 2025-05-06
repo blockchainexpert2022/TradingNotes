@@ -1,4 +1,4 @@
-# You can add PDFs files (about ICT trading for example) and ask Gemini to use the information in the PDF(s) to analyze the asset(s)
+# You can add PDFs files in /tmp/pdf/ (about ICT trading for example) and ask Gemini to use the information in the PDF(s) to analyze the asset(s)
 
 import requests
 import time
