@@ -107,7 +107,8 @@ def envoyer_contenu_a_gemini(chemins_images, timeframes, chemins_pdfs=[]):
         return None
 
     try:
-        model = genai.GenerativeModel('gemini-1.5-pro')
+        #model = genai.GenerativeModel('gemini-1.5-pro')        
+        model = genai.GenerativeModel('gemini-2.5-pro-exp-03-25')
         
         # Préparation du contenu
         content = ["Analyse trading complète avec:"]
