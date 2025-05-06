@@ -1,5 +1,3 @@
-# You can add PDFs files in /tmp/pdf/ (about ICT trading for example) and ask Gemini to use the information in the PDF(s) to analyze the asset(s)
-
 import requests
 import time
 import os
@@ -16,7 +14,8 @@ import google.generativeai as genai
 
 # Configuration
 actifs = ["EURUSD"]
-timeframes = ["1", "5", "15", "60", "240", "1D", "1W"]  # m1, m5, m15, h1, h4, daily, weekly
+#timeframes = ["1", "5", "15", "60", "240", "1D", "1W"]  # m1, m5, m15, h1, h4, daily, weekly
+timeframes = ["1"]  # m1, m5, m15, h1, h4, daily, weekly
 gemini_api_key = "REPLACE ME"  # Replace with your actual Gemini API key
 chemin_enregistrement = "/tmp/screenshots"  # Dossier pour les captures
 chemin_pdf = "/tmp/pdf"  # Dossier pour les PDFs à analyser
@@ -53,8 +52,8 @@ def prendre_screenshot_tradingview(actif, timeframe):
     
     try:
         from google.colab import drive
-        !apt-get update
-        !apt install chromium-chromedriver
+        #!apt-get update
+        #!apt install chromium-chromedriver
         options.binary_location = "/usr/bin/chromium-browser"
         driver = webdriver.Chrome(options=options)
     except ImportError:
@@ -99,22 +98,37 @@ def envoyer_contenu_a_gemini(chemins_images, timeframes, chemins_pdfs=[]):
     try:
         model = genai.GenerativeModel('gemini-1.5-pro')
         
-        # Préparation du prompt
-        prompt = """analyser l'actif en fonction de ce qui est écrit dans le pdf"""
-        
-        #if chemins_pdfs:
-        #    prompt += "\n\n4. Analyse relativement au contenu des PDF joints"
-        
         # Préparation du contenu
-        content = [prompt]
+        content = ["Analyse trading complète avec:"]
         
-        # Ajout des images
+        # 1. Ajouter les informations sur les timeframes
+        content.append(f"Timeframes fournis: {', '.join(timeframes)}")
+        
+        # 2. Ajouter les screenshots
         for img_path in chemins_images:
-            content.append(Image.open(img_path))
+            try:
+                img = Image.open(img_path)
+                content.append(f"Graphique {os.path.basename(img_path)}:")
+                content.append(img)
+            except Exception as e:
+                print(f"Erreur chargement image {img_path}: {e}")
         
-        # Ajout des PDFs
+        # 3. Ajouter les PDFs
         for pdf_path in chemins_pdfs:
-            content.append(genai.upload_file(pdf_path))
+            try:
+                content.append(f"Document {os.path.basename(pdf_path)}:")
+                content.append(genai.upload_file(pdf_path))
+            except Exception as e:
+                print(f"Erreur chargement PDF {pdf_path}: {e}")
+        
+        # 4. Demande d'analyse structurée
+        prompt = """
+        Fournissez une analyse détaillée avec:
+        1. Analyse technique multi-timeframe
+        2. Points clés des documents PDF
+        3. Recommandations de trading (entrée, SL, TP)
+        4. Niveau de confiance (1-5)"""
+        content.append(prompt)
         
         # Envoi à Gemini
         response = model.generate_content(content)
@@ -156,10 +170,10 @@ if __name__ == "__main__":
                 print("="*50)
         
         # Nettoyage
-        for img in chemins_images:
-            try:
-                os.remove(img)
-            except:
-                pass
+        #for img in chemins_images:
+            #try:
+                #os.remove(img)
+            #except:
+                #pass
     
     print("Traitement terminé")
