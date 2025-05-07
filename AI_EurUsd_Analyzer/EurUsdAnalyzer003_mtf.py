@@ -1,5 +1,9 @@
 # This version takes one screenshot in one timeframe + sends it to gemini then takes the next one in another timeframe and so on...
 
+!pip install selenium pillow requests google-generativeai
+!apt-get update
+!apt-get install -y chromium-chromedriver
+
 import requests
 import time
 import os
