@@ -23,7 +23,7 @@ import google.generativeai as genai
 actifs = ["EURUSD"]
 timeframes_init = ["1", "5", "15", "60", "240", "1D", "1W"]  # Pour analyse initiale
 timeframe_monitor = "1"  # Pour monitoring en boucle
-gemini_api_key = "REPLACEME"  # Remplacez par votre clé API
+gemini_api_key = "REPLACE_ME"  # Remplacez par votre clé API
 chemin_enregistrement = "/tmp/screenshots"
 chemin_pdf = "/tmp/pdf"
 os.makedirs(chemin_enregistrement, exist_ok=True)
@@ -34,7 +34,7 @@ genai.configure(api_key=gemini_api_key)
 
 def reset_environnement():
     """Nettoie les dossiers de travail"""
-    for folder in [chemin_enregistrement, chemin_pdf]:
+    for folder in [chemin_enregistrement]: #chemin_pdf
         if os.path.exists(folder):
             shutil.rmtree(folder)
             os.makedirs(folder)
@@ -84,7 +84,7 @@ def trouver_pdfs():
 
 def initialiser_session_gemini():
     """Initialise une session Gemini avec contexte"""
-    model = genai.GenerativeModel('gemini-2.5-pro-exp-03-25')
+    model = genai.GenerativeModel('gemini-1.5-flash')
     chat = model.start_chat(history=[])
     return chat
 
