@@ -1,5 +1,9 @@
 # This version takes all screenshots and sends them once to gemini
 
+!pip install selenium pillow requests google-generativeai
+!apt-get update
+!apt-get install -y chromium-chromedriver
+
 import requests
 import time
 import os
