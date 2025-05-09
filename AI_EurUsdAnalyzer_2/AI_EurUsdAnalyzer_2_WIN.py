@@ -24,7 +24,7 @@ os.environ['NO_PROXY'] = '*'
 # --- END CRUCIAL SECTION ---
 
 # --- API KEY MANAGEMENT ---
-gemini_api_key = "AIzaSyBifMdAQ2kT5IgunZZVU-52k-sJK9wYCuA" # REMPLACEZ PAR VOTRE VRAIE CLÉ
+gemini_api_key = "VOTRE_CLE_API_GEMINI_ICI" # REMPLACEZ PAR VOTRE VRAIE CLÉ
 
 if not gemini_api_key or "VOTRE_CLE_API_GEMINI_ICI" in gemini_api_key or "AIzaSyB" not in gemini_api_key:
     raise ValueError("GEMINI_API_KEY n'est pas définie ou est toujours la valeur par défaut. Veuillez définir votre clé API réelle.")
