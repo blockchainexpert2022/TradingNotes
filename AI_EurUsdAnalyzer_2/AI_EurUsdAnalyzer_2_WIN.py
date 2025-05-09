@@ -3,6 +3,9 @@
 # 1. Assurez-vous d'avoir installé les packages via pip :
 # pip install pillow requests google-generativeai tenacity
 
+# 1. Assurez-vous d'avoir installé les packages via pip :
+# pip install pillow requests google-generativeai tenacity
+
 import requests
 import time
 import os
@@ -55,7 +58,7 @@ def trouver_tous_pdfs():
     return pdfs_paths
 
 def initialiser_session_gemini():
-    model = genai.GenerativeModel('gemini-1.5-flash-latest') # ou 'gemini-1.5-pro-latest' pour potentiellement de meilleurs résultats
+    model = genai.GenerativeModel('gemini-1.5-flash-latest') # ou 'gemini-1.5-pro-latest'
     initial_prompt = """Vous êtes un expert en analyse technique ICT (Inner Circle Trader).
     Votre mission est d'analyser les documents PDF de référence (qui pourront être fournis initialement et/ou ajoutés en cours de session)
     et les captures d'écran de graphiques financiers que je vais vous envoyer.
@@ -118,11 +121,14 @@ def analyser_screenshots_manuels(chat, liste_chemins_screenshots):
     if not liste_chemins_screenshots:
         return
 
-    content_parts_base = [ # Base du prompt, les images seront ajoutées après
+    # Base du prompt, les images seront ajoutées après
+    content_parts_base = [
         "Voici une ou plusieurs nouvelles captures d'écran de graphiques financiers pour analyse.",
         "Veuillez fournir une analyse ICT détaillée pour chaque image, en tenant compte de TOUS les PDF de référence fournis jusqu'à présent et de l'historique de notre conversation.",
         "\nPour chaque graphique fourni, veuillez IMPÉRATIVEMENT :",
-        "1. **Identifier et indiquer clairement l'ACTIF et le TIMEFRAME visibles sur le graphique.** (Exemples de timeframes : M1, M5, M15, M30, H1, H4, D1, W1, MN). Si le nom du fichier fournit une indication, utilisez-la comme piste mais confirmez visuellement.",
+        "1. **Identifier et indiquer clairement l'ACTIF et le TIMEFRAME visibles sur le graphique.**",
+        "   Le nom du fichier original est fourni comme indice potentiel, mais vous devez **confirmer visuellement** l'actif et le timeframe à partir de l'image elle-même.",
+        "   (Exemples de timeframes : M1, M5, M15, M30, H1, H4, D1, W1, MN). Soyez précis.", # MODIFIÉ: Instruction sur le nom de fichier et confirmation visuelle
         "2. Analyser la structure du marché actuelle (BOS, MSS, tendance).",
         "3. Identifier les Points d'Intérêt (POI) clés (FVG, Order Blocks, Breaker Blocks, Mitigation Blocks) avec leurs niveaux approximatifs.",
         "4. Identifier les zones de liquidité importantes (Buy-side BSL, Sell-side SSL, Inducement IDM).",
@@ -139,32 +145,18 @@ def analyser_screenshots_manuels(chat, liste_chemins_screenshots):
         "\nSi plusieurs images sont fournies, analysez-les séquentiellement. Précisez pour chaque image l'actif et le timeframe que vous avez identifiés."
     ]
     
-    # Pour l'envoi à Gemini, nous allons construire une nouvelle liste 'content_parts' à chaque fois
-    # ou passer les images en tant que données binaires si cela aide à libérer les fichiers.
-    # Pour l'instant, gardons l'envoi d'objets PIL Image car c'est supporté.
-
-    images_a_envoyer_gemini = [] # Liste pour stocker les objets PIL.Image à envoyer
+    images_a_envoyer_gemini = []
 
     for screenshot_path in liste_chemins_screenshots:
         try:
             print(f"Preparing screenshot for analysis: {os.path.basename(screenshot_path)}")
-            # Utilisation du gestionnaire de contexte
             with Image.open(screenshot_path) as img:
-                # L'API Gemini a besoin de l'objet PIL Image.
-                # Une façon de s'assurer qu'on ne garde pas de verrou est de charger les données
-                # de l'image en mémoire et de passer cela, plutôt que l'objet qui maintient le fichier ouvert.
-                # Cependant, l'API `google-generativeai` est conçue pour prendre des objets PIL.Image.
-                # On va la stocker temporairement pour l'envoyer, `img.close()` sera appelé à la sortie du `with`.
-                # MAIS, si Gemini garde une référence interne, cela ne suffit pas.
-                # Essayons de forcer le chargement des données de l'image pour la "détacher" du fichier.
-                img.load() # Force le chargement des données de l'image depuis le fichier
+                img.load() 
                 images_a_envoyer_gemini.append({
-                    "path": screenshot_path, # Pour le nom du fichier dans le prompt
-                    "pil_image": img.copy() # Envoyer une COPIE de l'image
+                    "path": screenshot_path,
+                    "pil_image": img.copy() 
                 })
-            # À ce stade, en sortant du bloc `with`, img (l'original) devrait être fermé.
             print(f"Image {os.path.basename(screenshot_path)} processed (context manager exited).")
-
         except FileNotFoundError:
             print(f"ERROR: Screenshot file not found: {screenshot_path}")
         except Exception as e:
@@ -174,10 +166,10 @@ def analyser_screenshots_manuels(chat, liste_chemins_screenshots):
         print("Aucun screenshot valide à analyser.")
         return
 
-    # Construire le prompt final avec les images
-    final_content_parts = list(content_parts_base) # Commencer avec la base du prompt
+    final_content_parts = list(content_parts_base)
     for item in images_a_envoyer_gemini:
-        final_content_parts.append(f"\n--- Analyse de la capture d'écran suivante (Nom original: {os.path.basename(item['path'])}) ---")
+        # MODIFIÉ: Passer le nom du fichier explicitement dans le prompt pour cette image
+        final_content_parts.append(f"\n--- Analyse de la capture d'écran suivante (Nom original du fichier pour INDICE: '{os.path.basename(item['path'])}') ---")
         final_content_parts.append(item['pil_image'])
 
     try:
@@ -185,32 +177,35 @@ def analyser_screenshots_manuels(chat, liste_chemins_screenshots):
         print(f"=== ANALYSE DE GEMINI POUR {len(images_a_envoyer_gemini)} SCREENSHOT(S) ===")
         print(response.text)
         print("===================================================")
-
     except Exception as e:
         print(f"Erreur lors de l'envoi des screenshots à Gemini: {e}")
-    # Le finally n'est plus nécessaire pour fermer les images ici si le `with` fonctionne correctement
-    # et si `img.copy()` a bien détaché l'image du fichier.
 
-    # Essayer de déplacer les fichiers APRÈS que la réponse de Gemini soit revenue
-    # et que, espérons-le, toutes les références aux objets image soient libérées.
     print("Attempting to move processed screenshots...")
-    time.sleep(1) # AJOUTÉ: Petite pause pour laisser le système libérer les fichiers
+    time.sleep(0.5)
 
-    for item in images_a_envoyer_gemini: # Utiliser la liste des images traitées
+    for item in images_a_envoyer_gemini:
         screenshot_path = item['path']
         if os.path.exists(screenshot_path):
-            try:
-                destination_path = os.path.join(chemin_processed_screenshots, os.path.basename(screenshot_path))
-                if os.path.exists(destination_path):
-                    base, ext = os.path.splitext(os.path.basename(screenshot_path))
-                    destination_path = os.path.join(chemin_processed_screenshots, f"{base}_{time.strftime('%Y%m%d%H%M%S')}_{int(time.time()*1000)%1000}{ext}")
-                shutil.move(screenshot_path, destination_path)
-                print(f"Screenshot {os.path.basename(screenshot_path)} moved to processed folder as {os.path.basename(destination_path)}.")
-            except Exception as e_move:
-                print(f"Could not move screenshot {os.path.basename(screenshot_path)}: {e_move}")
-                # Si le déplacement échoue toujours, envisager une stratégie de renommage ou de copie+suppression
-                # ou simplement logger l'erreur et continuer.
-
+            # moved_successfully = False # Non utilisé si on n'a pas le `if not moved_successfully` à la fin
+            for attempt in range(3):
+                try:
+                    destination_path = os.path.join(chemin_processed_screenshots, os.path.basename(screenshot_path))
+                    if os.path.exists(destination_path):
+                        base, ext = os.path.splitext(os.path.basename(screenshot_path))
+                        destination_path = os.path.join(chemin_processed_screenshots, f"{base}_{time.strftime('%Y%m%d%H%M%S')}_{int(time.time()*1000)%1000}{ext}")
+                    shutil.move(screenshot_path, destination_path)
+                    print(f"Screenshot {os.path.basename(screenshot_path)} moved to processed folder as {os.path.basename(destination_path)} (attempt {attempt+1}).")
+                    # moved_successfully = True
+                    break 
+                except OSError as e_move:
+                    if e_move.winerror == 32 and attempt < 2 :
+                        print(f"WinError 32 on move attempt {attempt+1} for {os.path.basename(screenshot_path)}. Retrying in 1 second...")
+                        time.sleep(1) 
+                    else:
+                        print(f"Could not move screenshot {os.path.basename(screenshot_path)} after {attempt+1} attempts: {e_move}")
+                        break 
+            # if not moved_successfully: # Optionnel
+            #     print(f"WARNING: Failed to move {os.path.basename(screenshot_path)} after multiple attempts.")
 
 
 # --- Main Execution Block ---
@@ -262,22 +257,24 @@ if __name__ == "__main__":
                 else:
                     print("Avertissement: Certains des nouveaux PDF n'ont pas pu être envoyés.")
 
-            nouveaux_screenshots_a_analyser = []
+            set_nouveaux_screenshots = set() 
             extensions_images = ("*.png", "*.jpg", "*.jpeg", "*.PNG", "*.JPG", "*.JPEG")
             for ext in extensions_images:
                 fichiers_images_trouves = glob.glob(os.path.join(chemin_manual_screenshots, ext))
                 for fichier_image in fichiers_images_trouves:
-                    nouveaux_screenshots_a_analyser.append(fichier_image)
+                    set_nouveaux_screenshots.add(fichier_image)
             
+            nouveaux_screenshots_a_analyser = list(set_nouveaux_screenshots)
+
             if nouveaux_screenshots_a_analyser:
-                print(f"\n{len(nouveaux_screenshots_a_analyser)} screenshot(s) à analyser détecté(s) dans '{os.path.basename(chemin_manual_screenshots)}':")
+                print(f"\n{len(nouveaux_screenshots_a_analyser)} screenshot(s) unique(s) à analyser détecté(s) dans '{os.path.basename(chemin_manual_screenshots)}':")
                 
                 analyser_screenshots_manuels(chat_session, nouveaux_screenshots_a_analyser)
                 
                 print(f"\nAttente de nouveaux fichiers...")
 
             if not nouveaux_pdfs_a_uploader and not nouveaux_screenshots_a_analyser:
-                # print(".", end="", flush=True) # Optionnel, pour feedback visuel pendant l'attente
+                # print(".", end="", flush=True) 
                 pass
 
             time.sleep(10)
