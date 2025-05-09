@@ -36,7 +36,7 @@ timeframes_monitor = ["1", "5", "15"] # Timeframes pour le monitoring (M1, M5, M
 
 # --- API KEY MANAGEMENT ---
 # REMPLACEZ "VOTRE_CLE_API_GEMINI_ICI" PAR VOTRE VRAIE CLÉ API GEMINI
-gemini_api_key = "VOTRE_CLE_API_GEMINI_ICI" # EXEMPLE: "AIzaSyBifMdAQ2kT5IgunZZVU-52k-sJK9wYCuA"
+gemini_api_key = "VOTRE_CLE_API_GEMINI_ICI"
 
 if not gemini_api_key or "VOTRE_CLE_API_GEMINI_ICI" in gemini_api_key or "AIzaSyB" not in gemini_api_key:
     raise ValueError("GEMINI_API_KEY n'est pas définie ou est toujours la valeur par défaut. Veuillez définir votre clé API réelle.")
