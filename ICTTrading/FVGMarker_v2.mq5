@@ -1,10 +1,10 @@
 //+------------------------------------------------------------------+
 //|                                                 FVGMarker_v2.mq5 |
-//|                                  Copyright 2024, VotreNomOuPseudo |
-//|                                              https://www.example.com |
+//|                                  Copyright 2024, IDSYS/Reuniware |
+//|                                              https://ntic974.blogspot.com |
 //+------------------------------------------------------------------+
-#property copyright "Copyright 2024, VotreNomOuPseudo"
-#property link      "https://www.example.com"
+#property copyright "Copyright 2025, IDSYS/RNW"
+#property link      "https://ntic974.blogspot.com"
 #property version   "1.02" // Version incremented
 #property indicator_chart_window
 #property indicator_buffers 0
