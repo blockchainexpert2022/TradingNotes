@@ -104,6 +104,9 @@ https://x.com/bullprooftrader/status/1875179119895363675/photo/1
 
 ![image](https://github.com/user-attachments/assets/0beddf9b-b995-4938-aa9c-1d74a593ac0f)
 
+<img width="1685" height="1848" alt="image" src="https://github.com/user-attachments/assets/b20879e0-27c3-420a-b194-40891270a054" />
+
+
 https://x.com/TraderFlameseN/status/1875159984314658867/photo/1
 
 
