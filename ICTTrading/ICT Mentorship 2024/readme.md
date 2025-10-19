@@ -48,7 +48,7 @@ En résumé, la technique consiste à utiliser le **temps** pour anticiper une c
 
 ---
 
-Approfondissement les concepts de la première lecture et révèle ce que l'auteur appelle son "arme secrète" pour déterminer le biais directionnel.
+Approfondissement les concepts de la première lecture qui révèle ce que l'auteur appelle son "arme secrète" pour déterminer le biais directionnel.
 
 Cette session est une clinique sur la manière de lire l'intention du marché de façon simple et reproductible, en se concentrant sur le **temps** et la **liquidité**.
 
