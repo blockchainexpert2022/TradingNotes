@@ -173,3 +173,49 @@ N'entrez **JAMAIS** pendant le Judas Swing. Attendez que le prix se retourne dan
 
 #### **Étape 10 : Définir la Cible (Take Profit)**
 Votre objectif final est la zone de liquidité "lisse" que vous avez identifiée à l'étape 4. C'est votre "Draw on Liquidity".
+
+---
+
+La session de New York offre trois fenêtres d'opportunité cruciales à 7h, 8h et 9h (heure locale de New York) pour déterminer le biais directionnel du marché. La méthode est présentée comme simple, basée sur le temps et l'observation de la structure des prix.
+
+Voici les éléments à identifier et comment les utiliser :
+
+### Les 3 Fenêtres Clés (Pré-Marché)
+
+L'auteur identifie trois périodes de 30 minutes, appelées "pre-market range", qui sont fondamentales pour l'analyse :
+1.  **7h00 à 7h30**
+2.  **8h00 à 8h30**
+3.  **9h00 à 9h30** (juste avant l'ouverture de la bourse)
+
+### 1. Ce qu'il Faut Identifier Pendant Ces Heures
+
+Au début de chacune de ces fenêtres (à 7h00, 8h00 ou 9h00), votre objectif est d'analyser le graphique pour trouver ce que l'auteur appelle des **zones "lisses" (smooth)** par opposition aux zones **"déchiquetées" (jagged)**.
+
+*   **Zones "Lisses" - La Cible du Marché :**
+    *   Elles correspondent à des **"plus hauts relativement égaux" (relative equal highs)** ou des **"plus bas relativement égaux" (relative equal lows)**. Il s'agit de niveaux de prix où deux ou plusieurs sommets ou creux se sont formés à des niveaux très proches, créant une apparence plate et évidente sur le graphique.
+    *   L'auteur affirme que ces zones représentent une liquidité qui sera inévitablement attaquée par le marché. Il utilise l'analogie des "eaux calmes" qui attirent les requins.
+
+*   **Zones "Déchiquetées" - Zones à Éviter :**
+    *   Ce sont des zones où le prix a déjà effectué un mouvement agressif et volatile, créant des pics et des creux très marqués.
+    *   L'auteur explique que le "travail" a déjà été fait dans ces zones. Les "cannibales" du marché y ont déjà attaqué, et il ne faut donc pas s'attendre à ce que le marché y retourne immédiatement.
+
+**En résumé, au début de chaque fenêtre, vous posez la question : "De quel côté du marché le prix est-il le plus lisse ? Où se trouvent les plus hauts ou les plus bas égaux les plus évidents ?"**
+
+### 2. Comment Utiliser Ces Informations
+
+L'identification de ces zones "lisses" vous donne un avantage majeur : **le biais directionnel de la session**.
+
+*   **Détermination du Biais :**
+    *   Si vous identifiez des **plus hauts relativement égaux** clairs, votre biais pour la session est **haussier**. Le marché est susceptible de monter pour "attaquer" ces niveaux.
+    *   Si vous identifiez des **plus bas relativement égaux** clairs, votre biais est **baissier**. Le marché est susceptible de descendre pour prendre la liquidité sous ces niveaux.
+
+*   **Gestion des Scénarios Ambivalents :**
+    *   Si le marché présente à la fois des plus hauts et des plus bas égaux, la règle est simple : **attendez**. Vous devez attendre que l'un des deux côtés soit attaqué ("disrupted"). Une fois qu'un côté est pris, le marché se dirigera très probablement vers le côté opposé.
+
+*   **La Logique Temporelle :**
+    *   La probabilité d'une attaque sur la zone "lisse" augmente avec le temps. Si les plus hauts égaux identifiés avant 7h00 ne sont pas atteints pendant la fenêtre de 7h-7h30 ou de 8h-8h30, la probabilité qu'ils soient la cible pendant la fenêtre de 9h-9h30 (ou juste après) devient encore plus forte. Le marché "construit la confiance" dans cette zone en tant que cible.
+
+*   **Identifier le "Judas Swing" :**
+    *   Cette méthode permet d'anticiper le "Judas Swing", un faux mouvement qui se produit souvent à l'ouverture (après 9h30) dans la direction opposée au mouvement réel attendu. En connaissant votre biais (la direction de la zone "lisse"), vous pouvez identifier ce faux mouvement et vous préparer à trader dans le sens du véritable biais lorsque le marché se retourne pour attaquer sa cible.
+
+En conclusion, la méthode consiste à utiliser les fenêtres de 7h, 8h et 9h pour **identifier la liquidité la plus évidente (zones "lisses")**. Cette zone devient votre cible directionnelle pour la journée, vous fournissant un biais clair et une logique pour anticiper les mouvements du marché.
