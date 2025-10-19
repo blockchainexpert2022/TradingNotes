@@ -1,7 +1,5 @@
 
-Absolument. Voici une synthèse des points techniques de trading abordés dans cette première lecture de mentorat par ICT (The Inner Circle Trader).
-
-L'approche est présentée comme une méthode simplifiée, destinée à son fils Caleb et aux débutants, se concentrant sur les concepts fondamentaux de l'action des prix (price action) dictée par un algorithme.
+Concepts fondamentaux de l'action des prix (price action) dictée par un algorithme.
 
 ### **1. Les Outils Fondamentaux du Débutant**
 
