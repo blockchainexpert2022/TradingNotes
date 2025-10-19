@@ -99,3 +99,77 @@ L'auteur dévoile une méthode simple mais extrêmement puissante pour détermin
 *   **Backtester :** Une fois la méthode comprise, retournez en arrière et vérifiez par vous-même. Vous constaterez que ces scénarios se répètent constamment.
 
 En résumé, la leçon révèle une approche non-compliquée et basée sur des règles strictes : utiliser des **fenêtres temporelles spécifiques** pour identifier les **zones de liquidité évidentes ("lisses")** et anticiper que l'algorithme du marché ira les attaquer, tout en se protégeant avec un état d'esprit discipliné et une gestion du risque prudente.
+
+---
+
+Absolument. Voici un manuel chronologique, étape par étape, pour identifier une zone d'entrée en trading (Long ou Short) en se basant exclusivement sur les concepts techniques et la méthodologie exposés dans le dernier texte.
+
+---
+
+### **Manuel Chronologique pour Identifier une Entrée de Trading (selon ICT - Leçon 1)**
+
+**Philosophie Fondamentale :** Le marché est dirigé par un algorithme basé sur le **temps** qui cherche à attaquer la **liquidité**. La liquidité se trouve là où le prix est "lisse". Notre travail n'est pas de prédire, mais d'identifier la cible la plus probable et d'attendre un scénario à haute probabilité pour s'aligner avec l'intention de l'algorithme.
+
+**Outils Requis :**
+*   Graphiques en **15 minutes (M15), 5 minutes (M5) et 1 minute (M1)**.
+*   Une horloge synchronisée sur **l'heure de New York (ET)**.
+
+---
+
+### **Phase 1 : La Préparation (Avant l'Action)**
+
+#### **Étape 1 : Choisir sa Fenêtre d'Analyse**
+Vous avez trois opportunités. Choisissez-en **UNE SEULE** pour votre session :
+*   **Fenêtre 1 :** 7h00 - 7h30 (Heure de NY)
+*   **Fenêtre 2 :** 8h00 - 8h30 (Heure de NY)
+*   **Fenêtre 3 :** 9h00 - 9h30 (Heure de NY)
+
+Cette fenêtre de 30 minutes est votre "Pre-Market Range" ; elle sert de base à votre analyse pour la suite de la session.
+
+#### **Étape 2 : Préparer ses Graphiques**
+Affichez vos trois unités de temps (M15, M5, M1) pour avoir une vue multi-dimensionnelle du marché.
+
+---
+
+### **Phase 2 : L'Analyse et la Détermination du Biais (Au Début de la Fenêtre Clé)**
+
+#### **Étape 3 : Figer l'Analyse Temporelle**
+Au tout début de votre fenêtre choisie (par exemple, à 7h00:00 précises), arrêtez-vous et analysez **UNIQUEMENT** ce qui s'est passé **AVANT** cette heure.
+
+#### **Étape 4 : Poser la Question Clé**
+Regardez le marché et posez-vous cette question simple mais fondamentale :
+> **"De quel côté le marché est-il lisse (smooth) ?"**
+
+*   **Une zone "lisse"** est caractérisée par des **"Relative Equal Highs"** (plusieurs sommets à des niveaux de prix presque identiques) ou des **"Relative Equal Lows"** (plusieurs creux à des niveaux de prix presque identiques). C'est là que se trouve la liquidité (les stop-loss, les ordres d'entrée en attente).
+*   À l'inverse, identifiez les zones **"déchiquetées" (jagged)**, où le prix a déjà bougé violemment. Ces zones ont déjà été "attaquées" ; l'algorithme tendra à s'en éloigner.
+
+#### **Étape 5 : Définir le Biais (Hypothèse Principale)**
+*   Si vous identifiez une zone "lisse" évidente au-dessus du prix actuel (Relative Equal Highs), **votre biais est HAUSSIER**. Le marché est susceptible d'aller attaquer ces sommets.
+*   Si vous identifiez une zone "lisse" évidente en dessous du prix actuel (Relative Equal Lows), **votre biais est BAISSIER**. Le marché est susceptible d'aller attaquer ces creux.
+
+#### **Étape 6 : Gérer l'Incertitude (Cas Particulier)**
+Si le marché présente des zones "lisses" à la fois en haut et en bas, **vous n'avez pas de biais clair. La règle est d'ATTENDRE.**
+*   Attendez que le marché attaque l'une des deux zones.
+*   Une fois qu'une zone est attaquée (par exemple, les creux), l'autre zone (les sommets) devient la cible principale et votre biais est défini.
+
+---
+
+### **Phase 3 : L'Attente et l'Exécution (Après la Définition du Biais)**
+
+#### **Étape 7 : Anticiper le "Judas Swing"**
+L'algorithme va souvent créer un faux mouvement **CONTRE** votre biais pour piéger les traders.
+*   Si votre biais est **haussier**, attendez-vous à une baisse soudaine qui va chercher une liquidité sous un creux récent. C'est le **Judas Swing**.
+*   Si votre biais est **baissier**, attendez-vous à une hausse soudaine qui va chercher une liquidité au-dessus d'un sommet récent.
+
+#### **Étape 8 : Identifier la Zone d'Entrée Potentielle**
+Ce Judas Swing est ce qui **crée votre zone d'entrée**. Le texte donne l'exemple d'un **"Breaker"**.
+*   **Pour un Achat (Long) :** La baisse (Judas Swing) qui prend la liquidité en bas va créer un **"Bullish Breaker"** (la zone des dernières bougies haussières avant la chute). Cette zone, ou un Fair Value Gap créé par le retournement haussier qui suit, devient votre zone d'entrée potentielle.
+*   **Pour une Vente (Short) :** La hausse (Judas Swing) qui prend la liquidité en haut va créer un **"Bearish Breaker"**. Cette zone devient votre point d'entrée potentiel.
+
+#### **Étape 9 : L'Entrée en Position**
+N'entrez **JAMAIS** pendant le Judas Swing. Attendez que le prix se retourne dans la direction de votre biais, puis revienne tester la zone d'entrée que vous avez identifiée à l'étape 8.
+*   **Achat :** Entrez lorsque le prix revient dans le Bullish Breaker / FVG.
+*   **Vente :** Entrez lorsque le prix revient dans le Bearish Breaker / FVG.
+
+#### **Étape 10 : Définir la Cible (Take Profit)**
+Votre objectif final est la zone de liquidité "lisse" que vous avez identifiée à l'étape 4. C'est votre "Draw on Liquidity".
