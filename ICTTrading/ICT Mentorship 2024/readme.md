@@ -219,3 +219,23 @@ L'identification de ces zones "lisses" vous donne un avantage majeur : **le biai
     *   Cette méthode permet d'anticiper le "Judas Swing", un faux mouvement qui se produit souvent à l'ouverture (après 9h30) dans la direction opposée au mouvement réel attendu. En connaissant votre biais (la direction de la zone "lisse"), vous pouvez identifier ce faux mouvement et vous préparer à trader dans le sens du véritable biais lorsque le marché se retourne pour attaquer sa cible.
 
 En conclusion, la méthode consiste à utiliser les fenêtres de 7h, 8h et 9h pour **identifier la liquidité la plus évidente (zones "lisses")**. Cette zone devient votre cible directionnelle pour la journée, vous fournissant un biais clair et une logique pour anticiper les mouvements du marché.
+
+---
+
+Le texte indique et suggère fortement que les concepts ICT (Inner Circle Trader) s'appliquent à plusieurs classes d'actifs financiers, même si la démonstration principale se concentre sur les contrats à terme sur indices (le Nasdaq).
+
+Voici les éléments du texte qui le confirment :
+
+1.  **Mention explicite du Forex :** L'orateur déclare clairement son intention d'aborder à nouveau le marché des changes :
+    > "But in this mentorship, I will go back to talking about Forex because I know a lot of you are stuck in that asset class... I will cover some of the things that are salient to that individual asset class when it is appropriate."
+    Cela confirme que les concepts sont pertinents pour le Forex, même si ce n'est pas son marché de prédilection actuel.
+
+2.  **Référence à la Crypto :** Il mentionne que certains de ses étudiants négocient des cryptomonnaies et commente lui-même l'action des prix du Bitcoin, ce qui implique que ses principes d'analyse s'y appliquent également :
+    > "Or whatever does some of them trade crypto. I don't like crypto, but it is really good. By the way, do you hear about crypto or Trump came out and said he was going to make America like the hubs for Bitcoin and all of a sudden, Bitcoin fell out of bed. That's interesting, isn't it?"
+
+3.  **Présentation de principes universels :** Plus important encore, l'auteur ne présente pas ses concepts comme des astuces spécifiques au Nasdaq, mais comme des **principes fondamentaux du fonctionnement des marchés algorithmiques**.
+    *   **Le Temps comme base :** "Price will do what it's going to do because it's coded to do it based on time." Il présente le temps comme le premier facteur universel.
+    *   **La Liquidité comme cible :** "The market will go to an area of smoothness for the purpose of disrupting any orders... It does not matter what time frame you're looking at... This principle is always true." Il décrit la recherche de liquidité (zones "lisses") comme un principe immuable, quel que soit l'actif ou l'échelle de temps.
+    *   **Le "Code Source" du Marché :** Il va jusqu'à affirmer qu'il enseigne la logique fondamentale du marché lui-même : "This is the market. This is the source code."
+
+En conclusion, bien que l'exemple pratique de la session soit sur le Nasdaq, la logique sous-jacente est présentée comme étant universelle pour tous les marchés dirigés par des algorithmes, incluant explicitement le **Forex** et la **Crypto**, en plus des **indices**.
