@@ -1,0 +1,195 @@
+//@version=4
+study("Asia Session + Levels + Live Developing OTE (Precision + Anchors)", overlay=true)
+
+// ==========================================
+// --- INPUTS ---
+// ==========================================
+tradeRange = input("1800-0200", "Asia Session Range", input.session)
+rColor     = input(color.aqua, title="Asia High/Low Color")
+rStyle     = input(line.style_solid, title="Asia High/Low Style", options = [line.style_solid, line.style_dotted, line.style_dashed])
+rWidth     = input(1, title="Asia Line Width")
+mColor     = input(color.orange, title="Asia Mid Color")
+mStyle     = input(line.style_dashed, title="Asia Mid Style", options = [line.style_solid, line.style_dotted, line.style_dashed])
+
+showDaily  = input(true, title="--- Show Daily Levels (PDH/PDL) ---")
+dColor     = input(color.red, title="Daily Levels Color")
+dStyle     = input(line.style_dashed, title="Daily Levels Style", options = [line.style_solid, line.style_dotted, line.style_dashed])
+
+showWeekly = input(true, title="--- Show Weekly Levels (PWH/PWL) ---")
+wColor     = input(color.blue, title="Weekly Levels Color")
+wStyle     = input(line.style_dashed, title="Weekly Levels Style", options = [line.style_solid, line.style_dotted, line.style_dashed])
+
+showLiveOTE = input(true, title="--- Show LIVE Developing OTE ---")
+oteLen      = input(5, title="Swing Detection Sensitivity", minval=2)
+oteColor    = input(color.fuchsia, title="OTE Live Color")
+
+// ==========================================
+// --- LOGIQUE ASIA & LEVELS ---
+// ==========================================
+timeIsAllowed = not na(time(timeframe.period, tradeRange))
+var float asiaHigh = na, var float asiaLow = na
+
+if timeIsAllowed
+    if not timeIsAllowed[1] 
+        asiaHigh := high
+        asiaLow  := low
+    else 
+        asiaHigh := max(asiaHigh, high)
+        asiaLow  := min(asiaLow, low)
+asiaMid = (asiaHigh + asiaLow) / 2
+
+pdh = security(syminfo.tickerid, "D", high[1], lookahead=barmerge.lookahead_on)
+pdl = security(syminfo.tickerid, "D", low[1],  lookahead=barmerge.lookahead_on)
+pwh = security(syminfo.tickerid, "W", high[1], lookahead=barmerge.lookahead_on)
+pwl = security(syminfo.tickerid, "W", low[1],  lookahead=barmerge.lookahead_on)
+
+// ==========================================
+// --- LOGIQUE LIVE DEVELOPING OTE (CORRIGÉE & AMÉLIORÉE) ---
+// ==========================================
+ph = pivothigh(high, oteLen, oteLen)
+pl = pivotlow(low, oteLen, oteLen)
+
+var int last_ph_idx = na, var float last_ph_val = na
+var int last_pl_idx = na, var float last_pl_val = na
+
+if not na(ph)
+    last_ph_idx := bar_index[oteLen]
+    last_ph_val := ph
+if not na(pl)
+    last_pl_idx := bar_index[oteLen]
+    last_pl_val := pl
+
+var float live_62 = na
+var float live_70 = na
+var float live_79 = na
+var string live_dir = na
+
+// Variables pour stocker les points d'ancrage visuels (Ref High / Ref Low)
+var int ote_anchor_h_idx = na
+var float ote_anchor_h_val = na
+var int ote_anchor_l_idx = na
+var float ote_anchor_l_val = na
+
+if not na(last_ph_idx) and not na(last_pl_idx)
+    
+    // Cas 1 : BULLISH (Dernier pivot est un BAS)
+    if last_pl_idx > last_ph_idx
+        barsSince = bar_index - last_pl_idx
+        
+        // On cherche le plus haut depuis le pivot bas pour définir le range exact
+        // highestbars renvoie un offset négatif, on l'ajoute au bar_index actuel
+        offsetHigh = highestbars(high, barsSince + 1)
+        currentHigh = high[abs(offsetHigh)]
+        
+        diff = currentHigh - last_pl_val
+        
+        live_62 := currentHigh - (diff * 0.618)
+        live_70 := currentHigh - (diff * 0.705)
+        live_79 := currentHigh - (diff * 0.790)
+        live_dir := "BULL (Buy Dip)"
+        
+        // Enregistrement des ancres pour affichage
+        ote_anchor_l_idx := last_pl_idx
+        ote_anchor_l_val := last_pl_val
+        ote_anchor_h_idx := bar_index + offsetHigh
+        ote_anchor_h_val := currentHigh
+        
+    // Cas 2 : BEARISH (Dernier pivot est un HAUT)
+    else
+        barsSince = bar_index - last_ph_idx
+        
+        // On cherche le plus bas depuis le pivot haut
+        offsetLow = lowestbars(low, barsSince + 1)
+        currentLow = low[abs(offsetLow)]
+        
+        diff = last_ph_val - currentLow
+        
+        live_62 := currentLow + (diff * 0.618)
+        live_70 := currentLow + (diff * 0.705)
+        live_79 := currentLow + (diff * 0.790)
+        live_dir := "BEAR (Sell Rally)"
+        
+        // Enregistrement des ancres pour affichage
+        ote_anchor_h_idx := last_ph_idx
+        ote_anchor_h_val := last_ph_val
+        ote_anchor_l_idx := bar_index + offsetLow
+        ote_anchor_l_val := currentLow
+
+// ==========================================
+// --- AFFICHAGE ---
+// ==========================================
+// Fonction modifiée pour inclure le prix formaté
+f_draw_label(_x, _y, _txt, _color) =>
+    // Concaténation du texte et du prix formaté (ex: 1.23456)
+    finalText = _txt + " (" + tostring(_y, format.mintick) + ")"
+    label.new(_x, _y, finalText, xloc=xloc.bar_index, yloc=yloc.price, color=color.new(color.white, 100), style=label.style_label_left, textcolor=_color, textalign=text.align_left)
+
+var line l_asia_h=na, var label lb_asia_h=na, var line l_asia_l=na, var label lb_asia_l=na, var line l_asia_m=na, var label lb_asia_m=na
+var line l_pdh=na, var label lb_pdh=na, var line l_pdl=na, var label lb_pdl=na
+var line l_pwh=na, var label lb_pwh=na, var line l_pwl=na, var label lb_pwl=na
+var line l_ote1=na, var label lb_ote1=na, var line l_ote2=na, var label lb_ote2=na, var line l_ote3=na, var label lb_ote3=na
+
+// Variables graphiques pour identifier les Swing High/Low utilisés
+var line l_ote_range = na
+var label lb_ote_h_anchor = na
+var label lb_ote_l_anchor = na
+
+if barstate.islast
+    // Nettoyage des objets précédents
+    line.delete(l_asia_h), label.delete(lb_asia_h), line.delete(l_asia_l), label.delete(lb_asia_l), line.delete(l_asia_m), label.delete(lb_asia_m)
+    line.delete(l_pdh), label.delete(lb_pdh), line.delete(l_pdl), label.delete(lb_pdl)
+    line.delete(l_pwh), label.delete(lb_pwh), line.delete(l_pwl), label.delete(lb_pwl)
+    line.delete(l_ote1), label.delete(lb_ote1), line.delete(l_ote2), label.delete(lb_ote2), line.delete(l_ote3), label.delete(lb_ote3)
+    line.delete(l_ote_range), label.delete(lb_ote_h_anchor), label.delete(lb_ote_l_anchor)
+
+    off = 5
+    
+    // --- Asia Levels ---
+    if not na(asiaHigh)
+        l_asia_h := line.new(bar_index-10, asiaHigh, bar_index+10, asiaHigh, color=rColor, style=rStyle, width=rWidth, extend=extend.both)
+        lb_asia_h := f_draw_label(bar_index+off, asiaHigh, "Asia High", rColor)
+        
+        l_asia_l := line.new(bar_index-10, asiaLow, bar_index+10, asiaLow, color=rColor, style=rStyle, width=rWidth, extend=extend.both)
+        lb_asia_l := f_draw_label(bar_index+off, asiaLow, "Asia Low", rColor)
+        
+        l_asia_m := line.new(bar_index-10, asiaMid, bar_index+10, asiaMid, color=mColor, style=mStyle, width=rWidth, extend=extend.both)
+        lb_asia_m := f_draw_label(bar_index+off, asiaMid, "Asia Mid", mColor)
+
+    // --- Daily Levels ---
+    if showDaily
+        l_pdh := line.new(bar_index-10, pdh, bar_index+10, pdh, color=dColor, style=dStyle, extend=extend.both)
+        lb_pdh := f_draw_label(bar_index+off, pdh, "PDH", dColor)
+        
+        l_pdl := line.new(bar_index-10, pdl, bar_index+10, pdl, color=dColor, style=dStyle, extend=extend.both)
+        lb_pdl := f_draw_label(bar_index+off, pdl, "PDL", dColor)
+        
+    // --- Weekly Levels ---
+    if showWeekly
+        l_pwh := line.new(bar_index-10, pwh, bar_index+10, pwh, color=wColor, style=wStyle, width=2, extend=extend.both)
+        lb_pwh := f_draw_label(bar_index+off, pwh, "PWH", wColor)
+        
+        l_pwl := line.new(bar_index-10, pwl, bar_index+10, pwl, color=wColor, style=wStyle, width=2, extend=extend.both)
+        lb_pwl := f_draw_label(bar_index+off, pwl, "PWL", wColor)
+
+    // --- OTE Levels & Visualisation Swing High/Low ---
+    if showLiveOTE and not na(live_62)
+        // Lignes OTE
+        l_ote1 := line.new(bar_index-10, live_62, bar_index+10, live_62, color=oteColor, style=line.style_dotted, width=1, extend=extend.none)
+        lb_ote1 := f_draw_label(bar_index+off, live_62, "Live OTE 0.62", oteColor)
+        
+        l_ote2 := line.new(bar_index-10, live_70, bar_index+10, live_70, color=oteColor, style=line.style_solid, width=1, extend=extend.none)
+        lb_ote2 := f_draw_label(bar_index+off, live_70, "Live OTE 0.705 (" + live_dir + ")", oteColor)
+        
+        l_ote3 := line.new(bar_index-10, live_79, bar_index+10, live_79, color=oteColor, style=line.style_dotted, width=1, extend=extend.none)
+        lb_ote3 := f_draw_label(bar_index+off, live_79, "Live OTE 0.79", oteColor)
+
+        // Identification Visuelle des Swings (Ligne reliant H et L + Labels)
+        if not na(ote_anchor_h_idx) and not na(ote_anchor_l_idx)
+            // Ligne reliant le Swing High au Swing Low
+            l_ote_range := line.new(ote_anchor_h_idx, ote_anchor_h_val, ote_anchor_l_idx, ote_anchor_l_val, color=color.gray, style=line.style_arrow_both, width=1)
+            
+            // Label sur le Swing High
+            lb_ote_h_anchor := label.new(ote_anchor_h_idx, ote_anchor_h_val, "Ref H", xloc=xloc.bar_index, yloc=yloc.price, style=label.style_label_down, color=color.gray, textcolor=color.white, size=size.tiny)
+            
+            // Label sur le Swing Low
+            lb_ote_l_anchor := label.new(ote_anchor_l_idx, ote_anchor_l_val, "Ref L", xloc=xloc.bar_index, yloc=yloc.price, style=label.style_label_up, color=color.gray, textcolor=color.white, size=size.tiny)
