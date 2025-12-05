@@ -1,0 +1,126 @@
+//@version=5
+indicator("Asia Session + Levels + NY Midnight", overlay=true)
+
+// ==========================================
+// --- INPUTS ---
+// ==========================================
+// --- ASIA ---
+tradeRange = input.session("1800-0200", "Asia Session Range")
+rColor     = input(color.aqua, title="Asia High/Low Color")
+rWidth     = input(1, title="Asia Line Width")
+rStyle     = input(line.style_solid, title="Asia Line Style")
+mColor     = input(color.orange, title="Asia Mid Color")
+mStyle     = input(line.style_dashed, title="Asia Mid Style")
+
+// --- NY MIDNIGHT (NOUVEAU) ---
+showNYM    = input(true, title="--- Show NY Midnight Open ---")
+nyColor    = input(color.new(color.purple, 0), title="NY Midnight Color")
+nyStyle    = input(line.style_dotted, title="NY Midnight Style")
+
+// --- DAILY ---
+showDaily  = input(true, title="--- Show Daily Levels (PDH/PDL) ---")
+dColor     = input(color.red, title="Daily Levels Color")
+dStyle     = input(line.style_dashed, title="Daily Levels Style")
+
+// --- WEEKLY ---
+showWeekly = input(true, title="--- Show Weekly Levels (PWH/PWL) ---")
+wColor     = input(color.blue, title="Weekly Levels Color")
+wStyle     = input(line.style_dashed, title="Weekly Levels Style")
+
+// ==========================================
+// --- CALCULS ---
+// ==========================================
+
+// 1. ASTUCE "Plot Invisible" pour valider le script
+plot(close, display=display.none)
+
+// 2. Asia Session
+timeIsAllowed = not na(time(timeframe.period, tradeRange))
+var float asiaHigh = na
+var float asiaLow = na
+var float asiaMid = na
+
+if timeIsAllowed
+    if not timeIsAllowed[1] 
+        asiaHigh := high
+        asiaLow  := low
+    else 
+        asiaHigh := math.max(asiaHigh, high)
+        asiaLow  := math.min(asiaLow, low)
+asiaMid := (asiaHigh + asiaLow) / 2
+
+// 3. NY Midnight Open (Logic)
+// On détecte le changement de jour basé sur l'heure de New York
+// "America/New_York" assure que le calcul est juste quel que soit votre fuseau horaire
+var float ny_open = na
+// On vérifie si la date (en NY) a changé par rapport à la bougie précédente
+is_new_ny_day = ta.change(time("D", session.regular, "America/New_York"))
+
+if is_new_ny_day
+    ny_open := open // On capture l'ouverture de la première bougie du jour NY
+
+// 4. Daily & Weekly
+pdh = request.security(syminfo.tickerid, "D", high[1], lookahead=barmerge.lookahead_on)
+pdl = request.security(syminfo.tickerid, "D", low[1],  lookahead=barmerge.lookahead_on)
+pwh = request.security(syminfo.tickerid, "W", high[1], lookahead=barmerge.lookahead_on)
+pwl = request.security(syminfo.tickerid, "W", low[1],  lookahead=barmerge.lookahead_on)
+
+// ==========================================
+// --- DESSIN (Sur la dernière bougie) ---
+// ==========================================
+
+f_line(_y, _col, _style, _width) =>
+    line.new(bar_index, _y, bar_index + 1, _y, xloc=xloc.bar_index, extend=extend.both, color=_col, style=_style, width=_width)
+
+f_lbl(_y, _txt, _col) =>
+    txt = _txt + " (" + str.tostring(_y, format.mintick) + ")"
+    label.new(bar_index + 3, _y, txt, xloc=xloc.bar_index, yloc=yloc.price, color=color.new(color.white, 100), style=label.style_label_left, textcolor=_col, textalign=text.align_left)
+
+// Variables graphiques
+var line l_asia_h=na, var label lb_asia_h=na
+var line l_asia_l=na, var label lb_asia_l=na
+var line l_asia_m=na, var label lb_asia_m=na
+var line l_ny=na,     var label lb_ny=na
+var line l_pdh=na,    var label lb_pdh=na
+var line l_pdl=na,    var label lb_pdl=na
+var line l_pwh=na,    var label lb_pwh=na
+var line l_pwl=na,    var label lb_pwl=na
+
+if barstate.islast
+    // Nettoyage
+    line.delete(l_asia_h), label.delete(lb_asia_h)
+    line.delete(l_asia_l), label.delete(lb_asia_l)
+    line.delete(l_asia_m), label.delete(lb_asia_m)
+    line.delete(l_ny),     label.delete(lb_ny)
+    line.delete(l_pdh),    label.delete(lb_pdh)
+    line.delete(l_pdl),    label.delete(lb_pdl)
+    line.delete(l_pwh),    label.delete(lb_pwh)
+    line.delete(l_pwl),    label.delete(lb_pwl)
+
+    // ASIA
+    if not na(asiaHigh)
+        l_asia_h  := f_line(asiaHigh, rColor, rStyle, rWidth)
+        lb_asia_h := f_lbl(asiaHigh, "Asia High", rColor)
+        l_asia_l  := f_line(asiaLow, rColor, rStyle, rWidth)
+        lb_asia_l := f_lbl(asiaLow, "Asia Low", rColor)
+        l_asia_m  := f_line(asiaMid, mColor, mStyle, rWidth)
+        lb_asia_m := f_lbl(asiaMid, "Asia Mid", mColor)
+
+    // NY MIDNIGHT (Nouveau)
+    if showNYM and not na(ny_open)
+        l_ny  := f_line(ny_open, nyColor, nyStyle, 2)
+        lb_ny := f_lbl(ny_open, "NY Midnight Open", nyColor)
+
+    // DAILY
+    if showDaily
+        l_pdh  := f_line(pdh, dColor, dStyle, 1)
+        lb_pdh := f_lbl(pdh, "PDH", dColor)
+        l_pdl  := f_line(pdl, dColor, dStyle, 1)
+        lb_pdl := f_lbl(pdl, "PDL", dColor)
+
+    // WEEKLY
+    if showWeekly
+        l_pwh  := f_line(pwh, wColor, wStyle, 2)
+        lb_pwh := f_lbl(pwh, "PWH", wColor)
+        l_pwl  := f_line(pwl, wColor, wStyle, 2)
+        lb_pwl := f_lbl(pwl, "PWL", wColor)
