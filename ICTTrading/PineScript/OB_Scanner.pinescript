@@ -1,0 +1,107 @@
+//@version=5
+indicator("ICT Order Blocks Detector [Unlimited]", overlay=true, max_boxes_count=500)
+
+// --- 1. PARAMÈTRES ---
+period = input.int(5, "Période du Swing (Pivots)", minval=3)
+use_wick = input.bool(false, "Utiliser les mèches pour la zone ?")
+show_bull = input.bool(true, "Afficher OB Haussiers (Achat)")
+show_bear = input.bool(true, "Afficher OB Baissiers (Vente)")
+// >> NOUVEAU PARAMÈTRE ICI <<
+show_mitigated = input.bool(true, "Afficher OB Mitigated (Touchés)") 
+mitigation_alert = input.bool(true, "Alerte Sonore sur Mitigation")
+
+// --- 2. COULEURS ---
+bull_color = input.color(color.new(color.green, 80), "Couleur Bullish")
+bear_color = input.color(color.new(color.red, 80), "Couleur Bearish")
+border_col = input.color(color.new(color.gray, 50), "Bordure")
+
+// --- 3. DÉTECTION ---
+ph = ta.pivothigh(high, period, period)
+pl = ta.pivotlow(low, period, period)
+
+var box[] bull_boxes = array.new_box()
+var box[] bear_boxes = array.new_box()
+
+// >> BEARISH OB <<
+if not na(ph) and show_bear
+    for i = 1 to period * 2
+        if close[i] > open[i]
+            top = high[i]
+            bottom = use_wick ? low[i] : open[i]
+            array.push(bear_boxes, box.new(bar_index[i], top, bar_index, bottom, border_color=border_col, bgcolor=bear_color, text="Bearish OB", text_size=size.tiny, text_color=color.red))
+            break 
+
+// >> BULLISH OB <<
+if not na(pl) and show_bull
+    for i = 1 to period * 2
+        if close[i] < open[i]
+            top = use_wick ? high[i] : open[i]
+            bottom = low[i]
+            array.push(bull_boxes, box.new(bar_index[i], top, bar_index, bottom, border_color=border_col, bgcolor=bull_color, text="Bullish OB", text_size=size.tiny, text_color=color.green, text_valign=text.align_bottom))
+            break 
+
+// --- 4. GESTION (SANS LIMITATION DE MÉMOIRE) ---
+// On passe le paramètre show_mitigated pour l'utiliser dans la fonction
+method update_boxes(box[] boxes, bool is_bull, bool show_mit) =>
+    if array.size(boxes) > 0
+        for i = array.size(boxes) - 1 to 0
+            b = array.get(boxes, i)
+            
+            top = box.get_top(b)
+            btm = box.get_bottom(b)
+            r = box.get_right(b)
+            
+            // On vérifie si la boîte est toujours active
+            if r >= bar_index - 1
+                bool mitigated = false
+                bool broken = false
+                
+                if is_bull
+                    if low <= top and high >= btm
+                        mitigated := true
+                    if close < btm
+                        broken := true
+                else
+                    if high >= btm and low <= top
+                        mitigated := true
+                    if close > top
+                        broken := true
+                
+                // Drapeau d'action
+                bool remove_now = false
+                
+                if broken
+                    // Si cassé : on grise la boîte (historique)
+                    box.set_bgcolor(b, color.new(color.gray, 90))
+                    box.set_border_color(b, color.new(color.gray, 90))
+                    box.set_text(b, "Broken")
+                    remove_now := true
+                    
+                else if mitigated
+                    // >> MODIFICATION ICI <<
+                    // Si l'utilisateur veut voir les mitigated, on change la couleur
+                    if show_mit
+                        box.set_bgcolor(b, is_bull ? color.new(color.green, 60) : color.new(color.red, 60))
+                        box.set_right(b, bar_index) 
+                        box.set_text(b, "Mitigated")
+                    else
+                        // Sinon, on supprime carrément la boîte visuellement
+                        box.delete(b)
+                    
+                    if mitigation_alert
+                        alert("ICT Order Block Testé !", alert.freq_once_per_bar)
+                    
+                    // Dans les deux cas, on arrête de suivre la boîte
+                    remove_now := true
+                
+                // LOGIQUE FINALE
+                if remove_now
+                    box unused = array.remove(boxes, i)
+                
+                if not remove_now
+                    box.set_right(b, bar_index + 5)
+
+// Exécution
+// J'ai ajouté le 3ème argument "show_mitigated" ici
+bull_boxes.update_boxes(true, show_mitigated)
+bear_boxes.update_boxes(false, show_mitigated)
