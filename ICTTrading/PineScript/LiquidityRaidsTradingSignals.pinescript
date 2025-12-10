@@ -1,0 +1,99 @@
+//@version=5
+strategy("ICT XAUUSD assistant - Liquidity Raids", overlay=true, process_orders_on_close=true)
+
+// --- 1. PARAMÈTRES ET HEURES (NY TIME) ---
+grp_time = "Horaires ICT (NY Time)"
+asia_sess = input.session("1800-0000", "Asia Session", group=grp_time)
+london_killzone = input.session("0200-0500", "London Killzone", group=grp_time)
+ny_killzone = input.session("0700-1100", "NY Killzone", group=grp_time)
+
+// Gestion du NY Midnight (00:00 NY)
+ny_midnight_hour = 0
+ny_midnight_min = 0
+
+// --- 2. CALCUL DES NIVEAUX CLÉS ---
+// PDH / PDL (Daily)
+d_high = request.security(syminfo.tickerid, "D", high[1], lookahead=barmerge.lookahead_on)
+d_low = request.security(syminfo.tickerid, "D", low[1], lookahead=barmerge.lookahead_on)
+
+// NY Midnight Open
+var float ny_midnight_price = na
+bool new_day = dayofweek != dayofweek[1]
+if new_day
+    ny_midnight_price := open
+
+// Asia High / Low
+var float asia_high = na
+var float asia_low = na
+bool in_asia = not na(time(timeframe.period, asia_sess, "America/New_York"))
+
+if in_asia
+    if na(asia_high) or high > asia_high
+        asia_high := high
+    if na(asia_low) or low < asia_low
+        asia_low := low
+else if in_asia[1] and not in_asia
+    // Fin de session Asie, on garde les niveaux
+    asia_high := asia_high
+    asia_low := asia_low
+else if new_day
+    // Reset pour le nouveau jour
+    asia_high := na
+    asia_low := na
+
+// --- 3. AFFICHAGE GRAPHIQUE ---
+plot(d_high, "PDH", color=color.new(color.red, 50), style=plot.style_circles)
+plot(d_low, "PDL", color=color.new(color.red, 50), style=plot.style_circles)
+plot(asia_high, "Asia High", color=color.new(color.aqua, 0), style=plot.style_line)
+plot(asia_low, "Asia Low", color=color.new(color.aqua, 0), style=plot.style_line)
+plot(ny_midnight_price, "NY Midnight", color=color.fuchsia, style=plot.style_cross, linewidth=2)
+
+// --- 4. LOGIQUE DE TRADING (SWEEP + RECLAIM) ---
+bool in_kz = not na(time(timeframe.period, london_killzone, "America/New_York")) or not na(time(timeframe.period, ny_killzone, "America/New_York"))
+
+// Définition du Sweep (Mèche qui traverse mais clôture qui revient)
+// Achat : On traverse un bas (PDL ou Asia Low) et on clôture au-dessus
+bool sweep_pdl = low < d_low and close > d_low
+bool sweep_asia_low = low < asia_low and close > asia_low
+bool long_condition = in_kz and (sweep_pdl or sweep_asia_low) and close > open // Bougie verte nécessaire
+
+// Vente : On traverse un haut (PDH ou Asia High) et on clôture en dessous
+bool sweep_pdh = high > d_high and close < d_high
+bool sweep_asia_high = high > asia_high and close < asia_high
+bool short_condition = in_kz and (sweep_pdh or sweep_asia_high) and close < open // Bougie rouge nécessaire
+
+// --- 5. EXÉCUTION ET GESTION SL/TP ---
+// Paramètres de risque
+rr_ratio = input.float(2.0, "Ratio Risque/Récompense", minval=1.0)
+
+if long_condition
+    float sl_long = low // SL sous la mèche du sweep
+    float risk_long = close - sl_long
+    float tp_long = close + (risk_long * rr_ratio)
+    
+    // On vise la liquidité opposée si elle est logique
+    if sweep_pdl
+        tp_long := asia_high // Si on sweep le PDL, on vise l'Asia High
+    
+    strategy.entry("Long Sweep", strategy.long, comment="L-Sweep")
+    strategy.exit("Exit Long", "Long Sweep", stop=sl_long, limit=tp_long)
+    
+    // Visuel
+    label.new(bar_index, low, "BUY\nTarget:" + str.tostring(tp_long, "#.##"), color=color.green, style=label.style_label_up, textcolor=color.white)
+
+if short_condition
+    float sl_short = high // SL au-dessus de la mèche du sweep
+    float risk_short = high - close
+    float tp_short = close - (risk_short * rr_ratio)
+
+    if sweep_pdh
+        tp_short := asia_low // Si on sweep le PDH, on vise l'Asia Low
+
+    strategy.entry("Short Sweep", strategy.short, comment="S-Sweep")
+    strategy.exit("Exit Short", "Short Sweep", stop=sl_short, limit=tp_short)
+
+    // Visuel
+    label.new(bar_index, high, "SELL\nTarget:" + str.tostring(tp_short, "#.##"), color=color.red, style=label.style_label_down, textcolor=color.white)
+
+// Background pour les Killzones
+bgcolor(in_kz ? color.new(color.gray, 90) : na, title="Killzones")
